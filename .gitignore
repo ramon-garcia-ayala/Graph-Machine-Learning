@@ -9,6 +9,9 @@ env/
 
 # Dependencias (Node.js)
 node_modules/
+.gmlenv/
+__pycache__/
+*.pyc
 
 # Archivos del sistema (macOS/Windows)
 .DS_Store
