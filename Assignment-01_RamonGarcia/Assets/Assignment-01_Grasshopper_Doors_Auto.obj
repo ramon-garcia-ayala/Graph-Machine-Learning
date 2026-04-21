@@ -2,35 +2,15 @@
 
 mtllib Assignment-01_Grasshopper_Doors_Auto.mtl
 usemtl Default
-v 1 0 -8
-v 1 2 -8
-v 2 2 -8
-v 2 0 -8
+v 5.5 0 -16
+v 5.5 2 -16
+v 6.5 2 -16
+v 6.5 0 -16
 vn 0 0 -1
 vn 0 0 -1
 vn 0 0 -1
 vn 0 0 -1
 f 1//1 2//2 3//3 4//4
-usemtl Default
-v 5 0 -14
-v 5 2 -14
-v 5 2 -15
-v 5 0 -15
-vn -1 0 0
-vn -1 0 0
-vn -1 0 0
-vn -1 0 0
-f 5//5 6//6 7//7 8//8
-usemtl Default
-v 10 0 -4
-v 10 2 -4
-v 11 2 -4
-v 11 0 -4
-vn 0 0 -1
-vn 0 0 -1
-vn 0 0 -1
-vn 0 0 -1
-f 9//9 10//10 11//11 12//12
 usemtl Default
 v 5.5 0 -6
 v 5.5 2 -6
@@ -40,12 +20,32 @@ vn 0 0 -1
 vn 0 0 -1
 vn 0 0 -1
 vn 0 0 -1
+f 5//5 6//6 7//7 8//8
+usemtl Default
+v 1 0 -8
+v 1 2 -8
+v 2 2 -8
+v 2 0 -8
+vn 0 0 -1
+vn 0 0 -1
+vn 0 0 -1
+vn 0 0 -1
+f 9//9 10//10 11//11 12//12
+usemtl Default
+v 5 0 -14
+v 5 2 -14
+v 5 2 -15
+v 5 0 -15
+vn -1 0 0
+vn -1 0 0
+vn -1 0 0
+vn -1 0 0
 f 13//13 14//14 15//15 16//16
 usemtl Default
-v 5.5 0 -16
-v 5.5 2 -16
-v 6.5 2 -16
-v 6.5 0 -16
+v 10 0 -4
+v 10 2 -4
+v 11 2 -4
+v 11 0 -4
 vn 0 0 -1
 vn 0 0 -1
 vn 0 0 -1
