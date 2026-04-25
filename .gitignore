@@ -16,3 +16,6 @@ __pycache__/
 # Archivos del sistema (macOS/Windows)
 .DS_Store
 Thumbs.db
+
+# Claude AI
+.claude
