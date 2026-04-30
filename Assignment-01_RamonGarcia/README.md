@@ -60,21 +60,21 @@ Three graph types are derived from the building topology:
 ### Scene 1 — 3D Perspective: Access Graph on Building Volume
 Full three-dimensional view of the building with rooms colored by program type and the access graph overlaid, showing node-to-node connectivity across all floors.
 
-![Scene 1 — 3D View](images/Scene_01.png)
+![Scene 1 — 3D View](Deliverables/Scene_01.png)
 
 ---
 
 ### Scene 2 — Elevation: Floor-by-Floor Connectivity
 Front elevation view exposing the vertical and horizontal relationships between rooms. The graph makes explicit how corridors (red) act as primary distribution nodes connecting living spaces (blue) to service areas (yellow).
 
-![Scene 2 — Elevation View](images/Scene_02.png)
+![Scene 2 — Elevation View](Deliverables/Scene_02.png)
 
 ---
 
 ### Scene 3 — Plan: Spatial Access Map
 Top-down plan view of the building with the access graph projected onto the floor plan. This reveals the hierarchical structure of movement — from the stair core outward to individual dwelling units — and highlights which spaces are most and least accessible.
 
-![Scene 3 — Plan View](images/Scene_03.png)
+![Scene 3 — Plan View](Deliverables/Scene_03.png)
 
 ---
 
@@ -94,7 +94,7 @@ Top-down plan view of the building with the access graph projected onto the floo
 ```
 TopologicFlow/
 ├── S02-Submission 01_Graphs.ipynb   # Main analysis notebook
-├── images/
+├── Deliverables/
 │   ├── Scene_01.png                 # 3D perspective view
 │   ├── Scene_02.png                 # Elevation view
 │   └── Scene_03.png                 # Plan view
