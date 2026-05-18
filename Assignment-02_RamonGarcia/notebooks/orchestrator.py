@@ -17,10 +17,16 @@ except ImportError:
     print("papermill is required.  Install with:  pip install papermill")
     raise
 
+from datetime import datetime
+
 NOTEBOOKS_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(NOTEBOOKS_DIR)
-ASSETS_DIR = os.path.join(BASE_DIR, "Assets")
+ASSETS_DIR = os.path.join(BASE_DIR, "assets")
+EXECUTED_DIR = os.path.join(NOTEBOOKS_DIR, "executed")
 os.makedirs(ASSETS_DIR, exist_ok=True)
+os.makedirs(EXECUTED_DIR, exist_ok=True)
+
+TIMESTAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
 
 NOTEBOOKS = [
     "NB-01_Geometry_Import_Setup.ipynb",
@@ -36,7 +42,8 @@ def main():
 
     for nb in NOTEBOOKS:
         input_path = os.path.join(NOTEBOOKS_DIR, nb)
-        output_path = os.path.join(NOTEBOOKS_DIR, "_executed_" + nb)
+        name, ext = os.path.splitext(nb)
+        output_path = os.path.join(EXECUTED_DIR, f"{name}_{TIMESTAMP}{ext}")
 
         print(f"\n{'=' * 60}")
         print(f"Running: {nb}")
@@ -49,6 +56,7 @@ def main():
                 output_path,
                 parameters={"SAVE_IMAGES": True},
                 kernel_name="python3",
+                execution_timeout=1800,  # 30 min per cell
             )
             elapsed = time.time() - start
             print(f"  OK  ({elapsed:.1f}s)")

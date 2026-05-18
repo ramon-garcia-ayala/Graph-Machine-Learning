@@ -22,3 +22,6 @@ Thumbs.db
 
 # Reference notebooks (no subir)
 GML_Sessions_Notebooks/reference_notebooks/
+
+# Executed notebook outputs
+**/executed/
