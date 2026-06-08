@@ -41,6 +41,9 @@ modelo de PyTorch Geometric, usando **topologicpy**.
 
 - `Topology.ByOBJPath(...)` devuelve una **lista** de clusters, no una `Topology`; hay que iterar y
   extraer faces (`Topology.Faces`) por cada elemento.
+- **Importar siempre con `transposeAxes=True`** (es el default): el OBJ es **Y-up** y topologicpy/Rhino
+  son **Z-up**, así que transpone Y/Z y el edificio queda con la altura en Z. Con `False` la altura
+  sale en Y (error clásico).
 - `Topology.ShortestDistance(a, b)` es costoso en bucle O(n²); prefiltrar siempre por bounding box.
 - Por capa: `Faces → Helper.Flatten → SelfMerge(Cluster.ByTopologies) → Topology.Cells` da una cell
   por geometría cerrada (esto SÍ es correcto; el problema es el SelfMerge global posterior).
