@@ -67,9 +67,27 @@ Results are rendered with `Topology.Show(faces, faceColorKey=..., backgroundColo
 |---|---|---|
 | `GRID_SIZE` | `3.0` | Analysis grid spacing. Lower = finer resolution, slower. `2.0` → ~3–4 min total. |
 | `FLOOR_HEIGHT` | `15.0` | Vertical gap between floors in the 3D graph (visual only). |
-| `STAIR_LOCATIONS` | 3 points at Y≈345 | XY plan coordinates of the stairs. **Edit these to match your actual stairs.** Run section 8 first to see the navigable grid and locate them. |
+| `STAIR_LOCATIONS` | 3 points at Y≈345 | XY plan coordinates of the stairs (+ optional floor-pair list). **Edit these to match your actual stairs.** Run section 8 first to see the navigable grid and locate them. See *Stair connectivity format* below. |
 | `VGA_GRID_SIZE` | `8.0` | Visibility viewpoint spacing (section 18). Coarser than `GRID_SIZE` by design. |
 | `VIS_SAMPLES` | `12` | Samples along each sightline for the occlusion test. |
+
+### Stair connectivity format
+
+Each `STAIR_LOCATIONS` entry controls **which floor pairs that stair connects**. Two forms are accepted:
+
+- `(X, Y)` — connects **all** adjacent floors (1↔2 *and* 2↔3). Original behaviour.
+- `(X, Y, [(floor_a, floor_b), ...])` — connects only the listed pairs. Floor indices are `0 = Floor 1`, `1 = Floor 2`, `2 = Floor 3`.
+
+```python
+STAIR_LOCATIONS = [
+    (155.0, 345.0, [(0, 1), (1, 2)]),   # full vertical stair: 1↔2 and 2↔3
+    (205.0, 345.0, [(0, 1)]),           # only Floor 1 ↔ Floor 2
+    (245.0, 345.0, [(1, 2)]),           # only Floor 2 ↔ Floor 3
+    (180.0, 345.0, [(0, 2)]),           # Floor 1 ↔ Floor 3 directly (skips Floor 2)
+]
+```
+
+Each pair becomes one direct vertical edge between the closest navigable node on each floor (it does **not** pass through intermediate floors). **Every floor must be reached by at least one stair**, otherwise it stays disconnected and the centrality / shortest-path sections (14–17) break (`"No path found"`). Section 10 (cell `97ded8bd`) reads these pairs; Section 3 (cell `7e3f6b5b`) defines them.
 
 ## Python environment
 
