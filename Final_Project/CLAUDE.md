@@ -59,13 +59,16 @@ Final_Project/
 
 ## Visual export format
 
-Results are rendered with `Topology.Show(faces, faceColorKey=..., backgroundColor="black")` — the same filled square cell format as the S03 notebooks — not as scatter points. Three floors are stacked vertically in each heatmap image.
+Heatmaps (sections 13–18) use a **2D raster renderer** (`go.Heatmap`) instead of `Topology.Show` 3D faces. Each metric value is written into a numpy matrix (one cell per grid node, `NaN` for walls/holes), then rendered with a Plotly Heatmap and exported via kaleido. Three floors are stacked vertically with a small gap between them.
+
+**Why 2D instead of 3D:** `Topology.Show` with 8 000+ faces requires WebGL. VS Code's notebook WebGL context crashes under that load (`"WebGL is not supported"`). The 2D renderer produces identical-looking filled-cell heatmaps without any WebGL dependency.
 
 ## Key parameters (Section 3 — Configuration)
 
 | Parameter | Default | Effect |
 |---|---|---|
-| `GRID_SIZE` | `3.0` | Analysis grid spacing. Lower = finer resolution, slower. `2.0` → ~3–4 min total. |
+| `renderer` | `"png"` | Plotly render target. `"png"` uses kaleido (no WebGL, works in VS Code). Change to `"browser"` for interactive figures. |
+| `GRID_SIZE` | `1.0` | Analysis grid spacing. Lower = finer resolution, slower. `2.0` → ~3–4 min total. |
 | `FLOOR_HEIGHT` | `15.0` | Vertical gap between floors in the 3D graph (visual only). |
 | `STAIR_LOCATIONS` | 3 points at Y≈345 | XY plan coordinates of the stairs (+ optional floor-pair list). **Edit these to match your actual stairs.** Run section 8 first to see the navigable grid and locate them. See *Stair connectivity format* below. |
 | `VGA_GRID_SIZE` | `8.0` | Visibility viewpoint spacing (section 18). Coarser than `GRID_SIZE` by design. |
@@ -107,9 +110,14 @@ The project uses the venv at `../env/` (one level up from `Final_Project/`). Act
 
 ## Typical run time
 
-| `GRID_SIZE` | Nodes | Total time (headless) |
+| `GRID_SIZE` | Nodes | Total time (all sections) |
 |---|---|---|
-| `3.0` | ~1012 | ~2.5 min |
-| `2.0` | ~2300 | ~5–8 min |
+| `3.0` | ~1 012 | ~2.5 min |
+| `2.0` | ~2 300 | ~5–8 min |
+| `1.0` | ~8 800 | ~1.5–3 hours |
 
 First run is slower because kaleido (image export) starts a Chromium subprocess.
+
+### WebGL note
+
+`renderer = "png"` avoids VS Code's WebGL crash. With `GRID_SIZE = 1.0` (~8 800 cells) the old `Topology.Show` 3D path crashed VS Code with *"WebGL is not supported"*. The 2D `go.Heatmap` path (sections 13–18) has no such limit. Sections 12 and 17 still use `Topology.Show` for the 3D building graph and shortest-path visualisation; these are lighter (graph edges, not filled faces) and have not caused crashes.
