@@ -50,12 +50,15 @@ Final_Project/
 
 | Section | Workflow | Scope |
 |---|---|---|
-| 13 | Degree Centrality | **Whole building** |
-| 14 | Closeness Centrality (Integration) | **Whole building** |
-| 15 | Betweenness Centrality (Choice) | **Whole building** |
-| 16 | Community Detection | **Whole building** |
-| 17 | Shortest Path (cross-floor) | **Whole building** |
+| 12 | Show combined 3D building graph | Visual (interactive 3D) |
+| 13 | Shortest Path (cross-floor) | **Whole building** |
+| 14 | Degree Centrality | **Whole building** |
+| 15 | Closeness Centrality (Integration) | **Whole building** |
+| 16 | Betweenness Centrality (Choice) | **Whole building** |
+| 17 | Community Detection | **Whole building** |
 | 18 | Visibility / Isovist (VGA) | Per floor (visibility doesn't cross slabs) |
+
+**Note:** Shortest Path was moved to step 13 (immediately after the 3D graph) so it acts as a visual validation that the stair connections work before running the heavier centrality metrics.
 
 ## Visual export format
 
@@ -67,11 +70,12 @@ Heatmaps (sections 13–18) use a **2D raster renderer** (`go.Heatmap`) instead 
 
 | Parameter | Default | Effect |
 |---|---|---|
-| `renderer` | `"png"` | Plotly render target. `"png"` uses kaleido (no WebGL, works in VS Code). Change to `"browser"` for interactive figures. |
+| `renderer` | `"png"` | Plotly render target for all heatmap cells. `"png"` uses kaleido (no WebGL, works in VS Code). |
+| `INTERACTIVE_RENDERER` | `"browser"` | Render target for the two rotatable 3D-graph cells (sections 12 and 13). `"browser"` opens in your default web browser, bypassing VS Code's WebGL crash. Change to `"notebook"` to embed inline if your VS Code build handles WebGL. |
 | `GRID_SIZE` | `1.0` | Analysis grid spacing. Lower = finer resolution, slower. `2.0` → ~3–4 min total. |
 | `FLOOR_HEIGHT` | `15.0` | Vertical gap between floors in the 3D graph (visual only). |
 | `STAIR_LOCATIONS` | 3 points at Y≈345 | XY plan coordinates of the stairs (+ optional floor-pair list). **Edit these to match your actual stairs.** Run section 8 first to see the navigable grid and locate them. See *Stair connectivity format* below. |
-| `VGA_GRID_SIZE` | `8.0` | Visibility viewpoint spacing (section 18). Coarser than `GRID_SIZE` by design. |
+| `VGA_GRID_SIZE` | `8.0` | Visibility viewpoint spacing (section 18). Coarser than `GRID_SIZE` by design. `compute_visibility` is O(n²) in viewpoints — at `VGA_GRID_SIZE = 1.0` it would take many hours. |
 | `VIS_SAMPLES` | `12` | Samples along each sightline for the occlusion test. |
 
 ### Stair connectivity format
@@ -120,4 +124,8 @@ First run is slower because kaleido (image export) starts a Chromium subprocess.
 
 ### WebGL note
 
-`renderer = "png"` avoids VS Code's WebGL crash. With `GRID_SIZE = 1.0` (~8 800 cells) the old `Topology.Show` 3D path crashed VS Code with *"WebGL is not supported"*. The 2D `go.Heatmap` path (sections 13–18) has no such limit. Sections 12 and 17 still use `Topology.Show` for the 3D building graph and shortest-path visualisation; these are lighter (graph edges, not filled faces) and have not caused crashes.
+`renderer = "png"` avoids VS Code's WebGL crash for all heatmap cells. With `GRID_SIZE = 1.0` (~8 800 cells) the old `Topology.Show` 3D path crashed VS Code with *"WebGL is not supported"*. The 2D `go.Heatmap` path (sections 14–18) has no such limit.
+
+Sections 12 and 13 (3D building graph and shortest-path) use `Topology.Show` + `INTERACTIVE_RENDERER = "browser"`, which opens in the system browser instead of the VS Code webview. This avoids the VS Code WebGL freeze while still providing a fully rotatable/zoomable 3D figure. Both cells also call `save_fig` to write a static PNG for the report.
+
+**Minimum cells needed to run section 18 (Visibility) independently:** steps 1 (imports), 3 (config), 4 (utility functions), 5 (OBJ import). Steps 7–17 (grid sampling, graph building, centralities) are not needed.
