@@ -13,7 +13,9 @@ Final_Project/
 │   ├── La Cité Radieuse_CellComplex.3dm    ← Rhino reference model
 │   └── La Cité Radieuse_Surface Lower Floor.3dm
 ├── Notebooks/
-│   └── NB_Marsella_MultiFloor_Spatial_Intelligence.ipynb
+│   └── NB_Marsella_MultiFloor_Spatial_Intelligence.ipynb   ← original notebook
+├── Spatial Intelligence/
+│   └── Updated_NB_Marsella_MultiFloor_Spatial_Intelligence.ipynb  ← extended notebook
 └── assets/
     ├── 01_floor_plans.png
     ├── 02_navigable_grids.png
@@ -23,7 +25,9 @@ Final_Project/
     ├── 06_betweenness_centrality.png
     ├── 07_communities.png
     ├── 08_shortest_path_3d.png
-    └── 09_visibility_isovist.png
+    ├── 09_visibility_isovist.png
+    ├── 10_mst_3d.png
+    └── 11_isovists_Floor_*.png
 ```
 
 `*.3dmbak` and `*.rhl` (Rhino backup/lock files) are **not tracked** in git.
@@ -48,17 +52,22 @@ Final_Project/
 
 ## Workflows in the notebook
 
+The table below reflects the **updated notebook** (`Spatial Intelligence/Updated_NB_…`). The original `Notebooks/NB_…` stops at section 19 without MST or Isovists.
+
 | Section | Workflow | Scope |
 |---|---|---|
 | 12 | Show combined 3D building graph | Visual (interactive 3D) |
-| 13 | Shortest Path (cross-floor) | **Whole building** |
-| 14 | Degree Centrality | **Whole building** |
-| 15 | Closeness Centrality (Integration) | **Whole building** |
-| 16 | Betweenness Centrality (Choice) | **Whole building** |
-| 17 | Community Detection | **Whole building** |
-| 18 | Visibility / Isovist (VGA) | Per floor (visibility doesn't cross slabs) |
+| 13 | Minimum Spanning Tree | **Whole building** |
+| 14 | Shortest Path (cross-floor + straightened) | **Whole building** |
+| 15 | Degree Centrality (hub / dead-end stats) | **Whole building** |
+| 16 | Closeness Centrality (Integration) | **Whole building** |
+| 17 | Betweenness Centrality (Choice) | **Whole building** |
+| 18 | Community Detection (area / count per community) | **Whole building** |
+| 19 | Visibility Heatmap / VGA | Per floor |
+| 20 | Isovist Analysis (geometric visibility polygons) | Per floor (Z=4 only if Shell succeeds) |
+| 21 | Building-wide Summary | **Whole building** |
 
-**Note:** Shortest Path was moved to step 13 (immediately after the 3D graph) so it acts as a visual validation that the stair connections work before running the heavier centrality metrics.
+**Ordering rationale:** MST (13) shows the structural backbone before navigating it; Shortest Path (14) validates stair connectivity interactively; centralities (15–17) run on the full graph; Community (18) groups the result; Visibility (19–20) is independent of the graph metrics.
 
 ## Visual export format
 
@@ -71,7 +80,7 @@ Heatmaps (sections 13–18) use a **2D raster renderer** (`go.Heatmap`) instead 
 | Parameter | Default | Effect |
 |---|---|---|
 | `renderer` | `"png"` | Plotly render target for all heatmap cells. `"png"` uses kaleido (no WebGL, works in VS Code). |
-| `INTERACTIVE_RENDERER` | `"browser"` | Render target for the two rotatable 3D-graph cells (sections 12 and 13). `"browser"` opens in your default web browser, bypassing VS Code's WebGL crash. Change to `"notebook"` to embed inline if your VS Code build handles WebGL. |
+| `INTERACTIVE_RENDERER` | `"browser"` | Render target for rotatable 3D-graph cells (sections 12, 13, 14). `"browser"` opens in your default web browser, bypassing VS Code's WebGL crash. Change to `"notebook"` to embed inline if your VS Code build handles WebGL. |
 | `GRID_SIZE` | `1.0` | Analysis grid spacing. Lower = finer resolution, slower. `2.0` → ~3–4 min total. |
 | `FLOOR_HEIGHT` | `15.0` | Vertical gap between floors in the 3D graph (visual only). |
 | `STAIR_LOCATIONS` | 3 points at Y≈345 | XY plan coordinates of the stairs (+ optional floor-pair list). **Edit these to match your actual stairs.** Run section 8 first to see the navigable grid and locate them. See *Stair connectivity format* below. |
@@ -94,7 +103,7 @@ STAIR_LOCATIONS = [
 ]
 ```
 
-Each pair becomes one direct vertical edge between the closest navigable node on each floor (it does **not** pass through intermediate floors). **Every floor must be reached by at least one stair**, otherwise it stays disconnected and the centrality / shortest-path sections (14–17) break (`"No path found"`). Section 10 (cell `97ded8bd`) reads these pairs; Section 3 (cell `7e3f6b5b`) defines them.
+Each pair becomes one direct vertical edge between the closest navigable node on each floor (it does **not** pass through intermediate floors). **Every floor must be reached by at least one stair**, otherwise it stays disconnected and the centrality / shortest-path sections (15–18) break (`"No path found"`). Section 10 (cell `97ded8bd`) reads these pairs; Section 3 (cell `7e3f6b5b`) defines them.
 
 ## Python environment
 
@@ -126,6 +135,8 @@ First run is slower because kaleido (image export) starts a Chromium subprocess.
 
 `renderer = "png"` avoids VS Code's WebGL crash for all heatmap cells. With `GRID_SIZE = 1.0` (~8 800 cells) the old `Topology.Show` 3D path crashed VS Code with *"WebGL is not supported"*. The 2D `go.Heatmap` path (sections 14–18) has no such limit.
 
-Sections 12 and 13 (3D building graph and shortest-path) use `Topology.Show` + `INTERACTIVE_RENDERER = "browser"`, which opens in the system browser instead of the VS Code webview. This avoids the VS Code WebGL freeze while still providing a fully rotatable/zoomable 3D figure. Both cells also call `save_fig` to write a static PNG for the report.
+Sections 12, 13, and 14 (3D building graph, MST, shortest-path) use `Topology.Show` or `go.Scatter3d` + `INTERACTIVE_RENDERER = "browser"`, which opens in the system browser instead of the VS Code webview. This avoids the VS Code WebGL freeze while still providing a fully rotatable/zoomable 3D figure. All three cells also call `save_fig` to write a static PNG for the report.
 
-**Minimum cells needed to run section 18 (Visibility) independently:** steps 1 (imports), 3 (config), 4 (utility functions), 5 (OBJ import). Steps 7–17 (grid sampling, graph building, centralities) are not needed.
+**Minimum cells needed to run section 19 (Visibility Heatmap) independently:** steps 1 (imports), 3 (config), 4 (utility functions), 5 (OBJ import). Grid sampling, graph building, and centrality sections (7–18) are not needed.
+
+**Minimum cells needed to run section 20 (Isovist Analysis) independently:** same as section 19 — steps 1, 3, 4, 5. The isovist cell rebuilds its own floor faces from `floor_faces` (populated in step 5).
