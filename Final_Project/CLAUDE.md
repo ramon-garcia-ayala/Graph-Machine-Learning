@@ -16,6 +16,16 @@ Final_Project/
 │   └── NB_Marsella_MultiFloor_Spatial_Intelligence.ipynb   ← original notebook
 ├── Spatial Intelligence/
 │   └── Updated_NB_Marsella_MultiFloor_Spatial_Intelligence.ipynb  ← extended notebook
+├── Team_Notebooks/                          ← split for parallel team runs
+│   ├── 01_Betweenness_Centrality.ipynb
+│   ├── 02_Closeness_Centrality.ipynb
+│   ├── 03_MST_Communities_Degree.ipynb
+│   ├── 04_Path_Visibility_Isovist.ipynb
+│   ├── 3D-Model/
+│   │   └── Marsella_3-Floor-Plans.obj      ← model copy (self-contained)
+│   ├── example_outputs/                    ← reference PNGs from a verified run
+│   ├── outputs/                            ← where fresh runs save their PNGs
+│   └── README.md
 └── assets/
     ├── 01_floor_plans.png
     ├── 02_navigable_grids.png
@@ -77,15 +87,16 @@ Heatmaps (sections 13–18) use a **2D raster renderer** (`go.Heatmap`) instead 
 
 ## Key parameters (Section 3 — Configuration)
 
-| Parameter | Default | Effect |
+| Parameter | Current value | Effect |
 |---|---|---|
 | `renderer` | `"png"` | Plotly render target for all heatmap cells. `"png"` uses kaleido (no WebGL, works in VS Code). |
-| `INTERACTIVE_RENDERER` | `"browser"` | Render target for rotatable 3D-graph cells (sections 12, 13, 14). `"browser"` opens in your default web browser, bypassing VS Code's WebGL crash. Change to `"notebook"` to embed inline if your VS Code build handles WebGL. |
-| `GRID_SIZE` | `1.0` | Analysis grid spacing. Lower = finer resolution, slower. `2.0` → ~3–4 min total. |
+| `INTERACTIVE_RENDERER` | `"browser"` | Render target for rotatable 3D-graph cells (sections 12, 13, 14). `"browser"` opens in your default web browser, bypassing VS Code's WebGL crash. Team_Notebooks use `"png"` for unattended runs. |
+| `GRID_SIZE` | `0.5` | Analysis grid spacing. **Current value produces ~40 000 nodes and makes walls visible** at the cost of very long run times. See timing table below. |
 | `FLOOR_HEIGHT` | `15.0` | Vertical gap between floors in the 3D graph (visual only). |
-| `STAIR_LOCATIONS` | 3 points at Y≈345 | XY plan coordinates of the stairs (+ optional floor-pair list). **Edit these to match your actual stairs.** Run section 8 first to see the navigable grid and locate them. See *Stair connectivity format* below. |
-| `VGA_GRID_SIZE` | `8.0` | Visibility viewpoint spacing (section 18). Coarser than `GRID_SIZE` by design. `compute_visibility` is O(n²) in viewpoints — at `VGA_GRID_SIZE = 1.0` it would take many hours. |
+| `STAIR_LOCATIONS` | 57 entries | XY plan coordinates of the stairs (+ optional floor-pair list). Run section 8 to see the navigable grid and locate them. See *Stair connectivity format* below. |
+| `VGA_GRID_SIZE` | `5.0` | Visibility viewpoint spacing (section 19). Coarser than `GRID_SIZE` by design. `compute_visibility` is O(n²) in viewpoints — keep above 4.0 for reasonable run times. |
 | `VIS_SAMPLES` | `12` | Samples along each sightline for the occlusion test. |
+| `ISO_STEP` | `5.0` | Isovist viewpoint spacing (section 20). `Face.Isovist` is slow; keep sparse. |
 
 ### Stair connectivity format
 
@@ -123,13 +134,29 @@ The project uses the venv at `../env/` (one level up from `Final_Project/`). Act
 
 ## Typical run time
 
-| `GRID_SIZE` | Nodes | Total time (all sections) |
-|---|---|---|
-| `3.0` | ~1 012 | ~2.5 min |
-| `2.0` | ~2 300 | ~5–8 min |
-| `1.0` | ~8 800 | ~1.5–3 hours |
+| `GRID_SIZE` | Nodes | Total time (all sections) | Notes |
+|---|---|---|---|
+| `8.0` | ~158 | <1 min | Smoke-test only |
+| `4.0` | ~640 | ~30–60 min | Fast iteration |
+| `3.0` | ~1 012 | ~2.5 min | — |
+| `2.0` | ~2 300 | ~5–8 min | — |
+| `1.0` | ~8 800 | ~1.5–3 hours | — |
+| `0.5` | ~40 000 | **days (split across team)** | Walls visible; use Team_Notebooks |
 
 First run is slower because kaleido (image export) starts a Chromium subprocess.
+
+### Team_Notebooks split (for GRID_SIZE = 0.5)
+
+The workflow is split into 4 self-contained notebooks under `Team_Notebooks/` so each team member can run one analysis in parallel on their own machine. Each notebook has its own copy of the OBJ model, writes PNGs to its local `outputs/`, and has `example_outputs/` as reference.
+
+| Notebook | Analysis | Estimated time |
+|---|---|---|
+| `01_Betweenness_Centrality` | Betweenness (Choice) | hours–day+ |
+| `02_Closeness_Centrality` | Closeness (Integration) | ~10–20 h |
+| `03_MST_Communities_Degree` | MST + Community + Degree | ~2–4 h |
+| `04_Path_Visibility_Isovist` | 3D graph + Shortest Path + VGA + Isovist | ~1–2 h |
+
+All four notebooks were smoke-tested end-to-end at `GRID_SIZE = 8.0` — all passed.
 
 ### WebGL note
 
