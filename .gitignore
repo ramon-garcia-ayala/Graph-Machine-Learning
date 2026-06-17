@@ -25,3 +25,10 @@ GML_Sessions_Notebooks/reference_notebooks/
 
 # Executed notebook outputs
 **/executed/
+
+# Old Notebooks
+Final_Project/Notebooks
+
+# Test files
+Final_Project/_verify_out.txt
+Final_Project/_verify_run.py
