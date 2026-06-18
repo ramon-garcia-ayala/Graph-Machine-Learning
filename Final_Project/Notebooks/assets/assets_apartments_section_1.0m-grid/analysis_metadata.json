@@ -1,0 +1,206 @@
+{
+  "generated": "2026-06-18 14:46:39",
+  "notebook": "NB_Marsella_Apartments_Section.ipynb",
+  "description": "Spatial Intelligence analysis of a 3-apartment section of the Unite d'Habitation (Marseille).",
+  "parameters": {
+    "OBJ_PATH": "E:/IAAC Local GIT Repositories/Graph ML - Environment/Final_Project\\3D-Models\\Marsella_3-Apartments.obj",
+    "GRID_SIZE": 1,
+    "FLOOR_HEIGHT": 10.0,
+    "FLOOR_LEVELS": [
+      0,
+      4,
+      8
+    ],
+    "VGA_GRID_SIZE": 0.3,
+    "VIS_SAMPLES": 12,
+    "ISO_STEP": 1,
+    "n_stair_locations": 4
+  },
+  "geometry": {
+    "plan_bbox": {
+      "x_min": 106.511147,
+      "x_max": 114.968163,
+      "y_min": 333.37851,
+      "y_max": 357.478302,
+      "width": 8.45701600000001,
+      "height": 24.09979199999998
+    },
+    "faces_per_floor": {
+      "Floor 1": 187,
+      "Floor 2": 88,
+      "Floor 3": 191
+    },
+    "navigable_nodes_per_floor": {
+      "Floor 1": 190,
+      "Floor 2": 154,
+      "Floor 3": 144
+    }
+  },
+  "graph": {
+    "nodes": 488,
+    "edges": 848,
+    "density": 0.007136365166459084,
+    "stair_edges": 4
+  },
+  "mst": {
+    "vertices": 488,
+    "edges": 487,
+    "density": 0.004098360655737705
+  },
+  "shortest_path": {
+    "length": 49.049876,
+    "n_nodes": 32,
+    "simplified_length": 41.029722650679865,
+    "simplified_waypoints": 6
+  },
+  "centrality": {
+    "degree": {
+      "n": 488,
+      "min": 0.002053,
+      "max": 0.010267,
+      "mean": 0.007136555327868852,
+      "std": 0.0013398342374428538,
+      "per_floor_mean": [
+        0.007176,
+        0.007334,
+        0.006873
+      ]
+    },
+    "closeness": {
+      "n": 488,
+      "min": 0.033008,
+      "max": 0.068941,
+      "mean": 0.050830434426229504,
+      "std": 0.009646520567607465,
+      "per_floor_mean": [
+        0.046858,
+        0.059505,
+        0.046795
+      ]
+    },
+    "betweenness": {
+      "n": 488,
+      "min": 0.0,
+      "max": 0.47861,
+      "mean": 0.03998646721311475,
+      "std": 0.06584854502241183,
+      "per_floor_mean": [
+        0.031526,
+        0.057745,
+        0.032157
+      ]
+    },
+    "top5_degree_hubs": [
+      {
+        "floor": 1,
+        "x": 110.51,
+        "y": 340.38,
+        "score": 0.010267,
+        "connections": 5
+      },
+      {
+        "floor": 1,
+        "x": 111.51,
+        "y": 340.38,
+        "score": 0.010267,
+        "connections": 5
+      },
+      {
+        "floor": 2,
+        "x": 110.51,
+        "y": 340.38,
+        "score": 0.010267,
+        "connections": 5
+      },
+      {
+        "floor": 2,
+        "x": 110.51,
+        "y": 350.38,
+        "score": 0.010267,
+        "connections": 5
+      },
+      {
+        "floor": 2,
+        "x": 111.51,
+        "y": 350.38,
+        "score": 0.010267,
+        "connections": 5
+      }
+    ]
+  },
+  "communities": {
+    "count": 12,
+    "total_cells": 488,
+    "total_area_m2": 488,
+    "sizes": {
+      "0": {
+        "cells": 57,
+        "area_m2": 57
+      },
+      "1": {
+        "cells": 51,
+        "area_m2": 51
+      },
+      "2": {
+        "cells": 56,
+        "area_m2": 56
+      },
+      "3": {
+        "cells": 26,
+        "area_m2": 26
+      },
+      "4": {
+        "cells": 17,
+        "area_m2": 17
+      },
+      "5": {
+        "cells": 25,
+        "area_m2": 25
+      },
+      "6": {
+        "cells": 36,
+        "area_m2": 36
+      },
+      "7": {
+        "cells": 28,
+        "area_m2": 28
+      },
+      "8": {
+        "cells": 63,
+        "area_m2": 63
+      },
+      "9": {
+        "cells": 46,
+        "area_m2": 46
+      },
+      "10": {
+        "cells": 45,
+        "area_m2": 45
+      },
+      "11": {
+        "cells": 38,
+        "area_m2": 38
+      }
+    }
+  },
+  "visibility_vga": {
+    "Floor 1": {
+      "viewpoints": 1993,
+      "min": 477,
+      "max": 1307,
+      "mean": 840.628
+    },
+    "Floor 2": {
+      "viewpoints": 1581,
+      "min": 88,
+      "max": 1363,
+      "mean": 894.645
+    },
+    "Floor 3": {
+      "viewpoints": 1660,
+      "min": 54,
+      "max": 1042,
+      "mean": 596.08
+    }
+  }
+}
