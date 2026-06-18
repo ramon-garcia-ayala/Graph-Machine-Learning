@@ -26,8 +26,8 @@ GML_Sessions_Notebooks/reference_notebooks/
 # Executed notebook outputs
 **/executed/
 
-# Old Notebooks
-Final_Project/Notebooks/Spatial Intelligence
+# Old / superseded notebooks — only ignore the OLD_ prefix file
+Final_Project/Notebooks/Spatial Intelligence/OLD_NB_*
 
 # Test files
 Final_Project/_verify_out.txt
