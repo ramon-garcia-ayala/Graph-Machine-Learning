@@ -1,0 +1,174 @@
+{
+  "generated": "2026-06-18 14:43:59",
+  "notebook": "NB_Marsella_Apartments_Section.ipynb",
+  "description": "Spatial Intelligence analysis of a 3-apartment section of the Unite d'Habitation (Marseille).",
+  "parameters": {
+    "OBJ_PATH": "E:\\IAAC Local GIT Repositories\\Graph ML - Environment\\Final_Project\\3D-Models\\Marsella_3-Floor-Plans_SIMPLIFIED.obj",
+    "GRID_SIZE": 8,
+    "FLOOR_HEIGHT": 30,
+    "FLOOR_LEVELS": [
+      0,
+      4,
+      8
+    ],
+    "VGA_GRID_SIZE": 5.0,
+    "VIS_SAMPLES": 12,
+    "ISO_STEP": 5.0,
+    "n_stair_locations": 58
+  },
+  "geometry": {
+    "plan_bbox": {
+      "x_min": 228.75,
+      "x_max": 361.25,
+      "y_min": 5.25,
+      "y_max": 28.75,
+      "width": 132.5,
+      "height": 23.5
+    },
+    "faces_per_floor": {
+      "Floor 1": 804,
+      "Floor 2": 696,
+      "Floor 3": 864
+    },
+    "navigable_nodes_per_floor": {
+      "Floor 1": 72,
+      "Floor 2": 33,
+      "Floor 3": 72
+    }
+  },
+  "graph": {
+    "nodes": 177,
+    "edges": 325,
+    "density": 0.020865434001027222,
+    "stair_edges": 61
+  },
+  "mst": {
+    "vertices": 177,
+    "edges": 176,
+    "density": 0.011299435028248588
+  },
+  "shortest_path": {
+    "length": 189.048349,
+    "n_nodes": 19,
+    "simplified_length": 181.61689188744384,
+    "simplified_waypoints": 6
+  },
+  "centrality": {
+    "degree": {
+      "n": 177,
+      "min": 0.011364,
+      "max": 0.028409,
+      "mean": 0.020865146892655367,
+      "std": 0.0048128103070730795,
+      "per_floor_mean": [
+        0.020833,
+        0.021866,
+        0.020438
+      ]
+    },
+    "closeness": {
+      "n": 177,
+      "min": 0.082863,
+      "max": 0.168744,
+      "mean": 0.12344615254237289,
+      "std": 0.02018269042763216,
+      "per_floor_mean": [
+        0.121713,
+        0.132521,
+        0.12102
+      ]
+    },
+    "betweenness": {
+      "n": 177,
+      "min": 0.000252,
+      "max": 0.263155,
+      "mean": 0.04189483050847458,
+      "std": 0.03853968680023928,
+      "per_floor_mean": [
+        0.037123,
+        0.058684,
+        0.038972
+      ]
+    },
+    "top5_degree_hubs": [
+      {
+        "floor": 1,
+        "x": 236.75,
+        "y": 13.25,
+        "score": 0.028409,
+        "connections": 5
+      },
+      {
+        "floor": 1,
+        "x": 244.75,
+        "y": 13.25,
+        "score": 0.028409,
+        "connections": 5
+      },
+      {
+        "floor": 1,
+        "x": 252.75,
+        "y": 13.25,
+        "score": 0.028409,
+        "connections": 5
+      },
+      {
+        "floor": 1,
+        "x": 260.75,
+        "y": 13.25,
+        "score": 0.028409,
+        "connections": 5
+      },
+      {
+        "floor": 1,
+        "x": 268.75,
+        "y": 13.25,
+        "score": 0.028409,
+        "connections": 5
+      }
+    ]
+  },
+  "communities": {
+    "count": 9,
+    "total_cells": 177,
+    "total_area_m2": 11328,
+    "sizes": {
+      "0": {
+        "cells": 18,
+        "area_m2": 1152
+      },
+      "1": {
+        "cells": 17,
+        "area_m2": 1088
+      },
+      "2": {
+        "cells": 22,
+        "area_m2": 1408
+      },
+      "3": {
+        "cells": 26,
+        "area_m2": 1664
+      },
+      "4": {
+        "cells": 16,
+        "area_m2": 1024
+      },
+      "5": {
+        "cells": 12,
+        "area_m2": 768
+      },
+      "6": {
+        "cells": 24,
+        "area_m2": 1536
+      },
+      "7": {
+        "cells": 16,
+        "area_m2": 1024
+      },
+      "8": {
+        "cells": 26,
+        "area_m2": 1664
+      }
+    }
+  }
+}
