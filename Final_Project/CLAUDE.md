@@ -4,33 +4,47 @@
 
 Spatial Intelligence analysis of three stacked floor plans from Le Corbusier's *Unité d'Habitation* (Marseille) using **topologicpy** and the Session-03 / Assignment-02 workflows. The key distinction from Assignment-02 is that all metrics are computed on a **single connected building graph** (all three floors joined through stair nodes), not per floor in isolation.
 
-Two notebooks exist: the **full-building** analysis (`Updated_NB_…`) and a **focused apartment-section** analysis (`NB_Marsella_Apartments_Section`) that runs on a smaller OBJ with a 0.2 m grid.
+Three active notebooks exist: the **full-building simplified** analysis (`Simplified_NB_…`), the **full-building original** analysis (`Updated_NB_…`), and a **focused apartment-section** analysis (`NB_Marsella_Apartments_Section`).
 
 ## Folder structure
 
 ```
 Final_Project/
 ├── 3D-Models/
-│   ├── Marsella_3-Floor-Plans.obj          ← full building (3 floor plans)
-│   ├── Marsella_3-Apartments.obj           ← small section (3 apartments, 3 floors)
-│   ├── La Cité Radieuse_CellComplex.3dm    ← Rhino reference model
+│   ├── Marsella_3-Floor-Plans.obj              ← original full building (3 floor plans)
+│   ├── Marsella_3-Floor-Plans_SIMPLIFIED.obj   ← simplified full building geometry
+│   ├── Marsella_3-Apartments.obj               ← small section (3 apartments, 3 floors)
+│   ├── Point_tags.gh                           ← Grasshopper script for picking stair coords
+│   ├── La Cité Radieuse_CellComplex.3dm        ← Rhino reference model
 │   └── La Cité Radieuse_Surface Lower Floor.3dm
 ├── Notebooks/
 │   ├── Spatial Intelligence/
-│   │   ├── Updated_NB_Marsella_MultiFloor_Spatial_Intelligence.ipynb  ← full building
-│   │   └── NB_Marsella_Apartments_Section.ipynb                       ← apartment section
+│   │   ├── Simplified_NB_Marsella_MultiFloor_Spatial_Intelligence.ipynb  ← simplified building
+│   │   ├── Updated_NB_Marsella_MultiFloor_Spatial_Intelligence.ipynb     ← original full building
+│   │   └── NB_Marsella_Apartments_Section.ipynb                          ← apartment section
 │   └── assets/
-│       └── assets_apartments_section/      ← outputs from the apartment-section notebook
+│       ├── assets_simplified_building_floorplans_8.0m-grid/  ← Simplified outputs (GRID_SIZE=8.0)
+│       │   ├── 01_floor_plans.png          (vertical, black bg)
+│       │   ├── 02_navigable_grids.png      (vertical, black bg)
+│       │   ├── 03_building_graph_3d.png    (orthographic isometric, axes visible)
+│       │   ├── 04–07_centrality_*.png      (show_face_heatmap, stacked vertical)
+│       │   ├── 08_shortest_path_3d.png     (orthographic isometric)
+│       │   ├── 09_visibility_isovist.png   (show_face_heatmap)
+│       │   ├── 10_mst_3d.png              (orthographic isometric)
+│       │   ├── 11_isovists_Floor_2.png     (isovist via Shell.ByFaces)
+│       │   ├── analysis_summary.md
+│       │   └── analysis_metadata.json
+│       └── assets_apartments_section_0.12m-grid/  ← Apartment outputs (GRID_SIZE=0.12)
 │           ├── 01_floor_plans.png          (horizontal, black bg)
 │           ├── 02_navigable_grids.png      (horizontal, black bg)
 │           ├── 03_building_graph_3d.png    (orthographic isometric)
-│           ├── 04–07_centrality_*.png      (go.Heatmap, 3 panels)
+│           ├── 04–07_centrality_*.png      (show_grid_heatmaps, 3 panels)
 │           ├── 08_shortest_path_3d.png     (orthographic isometric)
-│           ├── 09_visibility_isovist.png   (go.Heatmap, 3 panels)
+│           ├── 09_visibility_isovist.png   (show_grid_heatmaps, 3 panels)
 │           ├── 10_mst_3d.png              (orthographic isometric)
 │           ├── 11_isovists_all_floors.png  (ray-casting, 3 panels)
-│           ├── analysis_summary.md         (human-readable report)
-│           └── analysis_metadata.json      (machine-readable metadata)
+│           ├── analysis_summary.md
+│           └── analysis_metadata.json
 ├── Team_Notebooks/                          ← split for parallel team runs (full building)
 │   ├── 01_Betweenness_Centrality.ipynb
 │   ├── 02_Closeness_Centrality.ipynb
@@ -41,22 +55,32 @@ Final_Project/
 │   ├── example_outputs/                    ← reference PNGs from a verified run
 │   ├── outputs/                            ← where fresh runs save their PNGs
 │   └── README.md
-└── assets_new_notebooks/                   ← outputs from Updated_NB (full building)
+└── assets_new_notebooks/                   ← outputs from Updated_NB (original full building)
 ```
+
+Assets folders are named with the grid size used in that run (e.g. `_0.12m-grid`, `_8.0m-grid`). When re-running at a new `GRID_SIZE`, update `ASSETS_DIR` in the config cell to match.
 
 `*.3dmbak` and `*.rhl` (Rhino backup/lock files) are **not tracked** in git.
 `OLD_NB_*` files inside `Notebooks/Spatial Intelligence/` are git-ignored.
 
 ## Geometry facts
 
-### Full building (`Marsella_3-Floor-Plans.obj`)
+### Original full building (`Marsella_3-Floor-Plans.obj`)
 - Three 2D floor plans, flat in XY at **Z = 0, 4, 8**.
 - Plan dimensions: roughly **139 × 24 units** (X × Y), `X ≈ [121.7, 260.8]`, `Y ≈ [333.4, 357.5]`.
-- 57 stair connection points across two transition levels (Floor 3↔2 and Floor 2↔1).
+- Used by `Updated_NB_…` and the Team_Notebooks.
+
+### Simplified full building (`Marsella_3-Floor-Plans_SIMPLIFIED.obj`)
+- Three 2D floor plans of the same building, simplified mesh (2 644 verts vs 6 431).
+- **Different coordinate system** from the original: `X ≈ [228.8, 361.2]`, `Y ≈ [5.2, 28.8]`.
+- Floor levels: Y_obj ≈ **1, 4, 8** (not 0 — but FLOOR_LEVELS=[0,4,8] bins correctly via nearest-Z).
+- Used by `Simplified_NB_…`. Stair coordinates must be picked in this coordinate system.
+- 58 stair locations: 24 for Floor 3↔2 (y≈22), 31 for Floor 1↔2 (y≈12), 3 connecting all floors (y≈24).
+- Stair picking script: `Point_tags.gh` (Grasshopper).
 
 ### Apartment section (`Marsella_3-Apartments.obj`)
-- Three stacked floor plans of a **small 3-apartment section** of the same building.
-- Same Z-level convention: **Z = 0, 4, 8**.
+- Three stacked floor plans of a **small 3-apartment section**.
+- Same Z-level convention: **Z = 0, 4, 8**. Plan coords: `X ≈ [106.5, 115.0]`, `Y ≈ [333.4, 357.5]`.
 - Only **4 stair connection points** (2 for Floor 3↔2, 2 for Floor 2↔1).
 - Stair XY coordinates:
   - Floor 3↔2 (Z = 8): `(111.41043, 350.049)`, `(110.24082, 350.049)`
@@ -93,14 +117,26 @@ Final_Project/
 
 ## Key parameters
 
-### Full-building notebook (`Updated_NB_Marsella_MultiFloor_Spatial_Intelligence`)
+### Simplified-building notebook (`Simplified_NB_Marsella_MultiFloor_Spatial_Intelligence`)
 
 | Parameter | Value | Effect |
 |---|---|---|
-| `OBJ_PATH` | `Marsella_3-Floor-Plans.obj` | Full building geometry |
-| `GRID_SIZE` | `0.5` | ~40 000 nodes; walls visible; use Team_Notebooks for this size |
-| `STAIR_LOCATIONS` | 57 entries | XY coordinates of all stairs |
-| `VGA_GRID_SIZE` | `5.0` | Visibility viewpoint spacing (coarser than analysis grid) |
+| `OBJ_PATH` | `Marsella_3-Floor-Plans_SIMPLIFIED.obj` | Simplified full building geometry |
+| `GRID_SIZE` | `0.7` | Current value; 8.0 used for smoke tests |
+| `STAIR_LOCATIONS` | 58 entries | 24 for 3↔2, 31 for 1↔2, 3 for all floors |
+| `VGA_GRID_SIZE` | `5.0` | Coarse spacing (O(n²) cost) |
+| `ISO_STEP` | `5.0` | Isovist viewpoint spacing |
+| `ASSETS_DIR` | `Notebooks/assets/assets_simplified_building_floorplans_{grid}/` | Output PNGs |
+| `INTERACTIVE_RENDERER` | `"png"` | Static PNG only (no browser popup) |
+
+### Original full-building notebook (`Updated_NB_Marsella_MultiFloor_Spatial_Intelligence`)
+
+| Parameter | Value | Effect |
+|---|---|---|
+| `OBJ_PATH` | `Marsella_3-Floor-Plans.obj` | Original full building geometry |
+| `GRID_SIZE` | `0.5` | ~40 000 nodes; use Team_Notebooks for this size |
+| `STAIR_LOCATIONS` | 57 entries | Original XY coordinates (Y≈333-357 coordinate system) |
+| `VGA_GRID_SIZE` | `5.0` | Visibility viewpoint spacing |
 | `ISO_STEP` | `5.0` | Isovist viewpoint spacing |
 | `ASSETS_DIR` | `assets_new_notebooks/` | Output PNGs |
 
@@ -109,46 +145,48 @@ Final_Project/
 | Parameter | Value | Effect |
 |---|---|---|
 | `OBJ_PATH` | `Marsella_3-Apartments.obj` | Small 3-apartment section |
-| `GRID_SIZE` | `0.2` | Fine 0.2 m grid; manageable node count for small section |
+| `GRID_SIZE` | `0.12` | Current value (0.3 is faster for iteration) |
 | `STAIR_LOCATIONS` | 4 entries | 2 for Floor 3↔2, 2 for Floor 2↔1 |
-| `VGA_GRID_SIZE` | `1.0` | Smaller spacing suited to the reduced area |
-| `ISO_STEP` | `1.0` | Smaller spacing suited to the reduced area |
-| `ASSETS_DIR` | `Notebooks/assets/assets_apartments_section/` | Output PNGs |
+| `VGA_GRID_SIZE` | `0.3` | Fine spacing for small section |
+| `ISO_STEP` | `3.0` | Isovist viewpoint spacing |
+| `ASSETS_DIR` | `Notebooks/assets/assets_apartments_section_{grid}/` | Output PNGs |
 
-Both notebooks share: `renderer = "png"`, `INTERACTIVE_RENDERER = "browser"`, `FLOOR_HEIGHT = 15.0`.
+All notebooks share: `renderer = "png"`, `FLOOR_HEIGHT = 15.0`, `FLOOR_LEVELS = [0, 4, 8]`.
 
-### Visualization design — apartment-section notebook
+### Visualization design
 
-All plots are adapted for the smaller model geometry and follow a consistent visual language:
+**Shared across all notebooks (black background everywhere):**
+- All figures use `paper_bgcolor="black"` / `plot_bgcolor="black"` / `backgroundColor="black"`.
+- White axis text, titles, and tick labels; faint white grid lines `rgba(255,255,255,0.10-0.15)`.
 
-**2D plans and heatmaps (01, 02, 04–07, 09, 11):**
-- **Horizontal layout** — 3 panels side by side (`make_subplots rows=1, cols=3`), one per floor.
-- **Black background** (`paper_bgcolor="black"`, `plot_bgcolor="black"`), white axis text and titles.
-- **Real plan coordinates** on both axes — same measurements as the floor plan figures so spaces are directly comparable.
-- Floor labels as subplot titles, common colour scale shared across all three panels.
-- Figure dimensions auto-computed from `UMIN/UMAX/VMIN/VMAX` via `px_pu` (pixels-per-unit).
+**3D plots (03 building graph, 08 shortest path, 10 MST) — all notebooks:**
+- `projection=dict(type="orthographic")`, `eye=(1.4, 1.4, 1.4)` — isometric view, full building fits in frame.
+- `aspectmode="data"` so floor proportions are preserved.
+- Axes visible with titles `x`, `y`, `z (floor stack)`.
 
-**Centrality / community heatmaps (04–07) — `show_grid_heatmaps`:**
-- Uses `go.Heatmap` (2D raster) instead of `Topology.Show` 3D faces — avoids WebGL, scales to any size.
-- Values are binned onto the GRID_SIZE lattice; wall cells remain transparent (NaN).
+**Floor plans (01) and navigable grids (02):**
+- *Simplified & Updated notebooks:* **vertical stack** (`rows=N, cols=1`) — correct for the long horizontal plans.
+- *Apartment-section notebook:* **horizontal panels** (`rows=1, cols=N`) — correct for tall narrow plans.
+
+**Centrality / community heatmaps (04–07):**
+- *Apartment-section:* `show_grid_heatmaps` → `go.Heatmap` 2D raster, 3 side-by-side panels, real plan coordinates on axes.
+- *Simplified & Updated:* `show_face_heatmap` → `Topology.Show` 3D faces, vertical stack, `scene_camera eye=[0,0,1.5]`.
 
 **VGA heatmap (09):**
-- Same `show_grid_heatmaps` path; viewpoints collected per floor as `(xs, ys, deg)` tuples.
+- *Apartment-section:* `show_grid_heatmaps` path with `(xs, ys, deg)` per floor.
+- *Simplified & Updated:* `show_face_heatmap` path with display cell faces.
 
-**Isovist analysis (11) — `section 20` rewritten with ray-casting:**
-- Previous implementation used `Face.Isovist` via `Shell.ByFaces` — only worked on Floor 2 (Z=4) because Z=0 and Z=8 triangulations are too dense/overlapping for clean shell reconstruction.
-- New implementation: numeric isovist by ray-casting over the **navigable cell mask**. Casts `ISO_NRAYS=120` rays per viewpoint, marching at `GRID_SIZE` steps until the ray leaves the navigable mask (= wall). Works identically on all three floors.
-- Output: floor silhouette (grey) + isovist polygons (cyan, `ISO_STEP=3.0` viewpoint grid) + viewpoint markers (yellow). Saved as `11_isovists_all_floors.png`.
+**Isovist analysis (11):**
+- *Apartment-section:* numeric ray-casting over the navigable cell mask — works on all 3 floors. Output: `11_isovists_all_floors.png`.
+- *Simplified & Updated:* `Face.Isovist` via `Shell.ByFaces` — only works on Floor 2 (Z=4); others skipped. Output: `11_isovists_Floor_2.png`.
 
-**3D plots (03, 08, 10) — orthographic + visible axes:**
-- Camera: `projection=dict(type="orthographic")`, `eye=(1.4, 1.4, 1.4)` — isometric view, tighter zoom.
-- Axes visible with white ticks, titles (`x`, `y`, `z (floor stack)`) and faint grid lines (`rgba(255,255,255,0.15)`).
-- Previous design had all axes hidden in the MST plot; now consistent across all three 3D figures.
+**Section 22 — analysis summary export (all notebooks):**
+- Writes `analysis_summary.md` and `analysis_metadata.json` to `ASSETS_DIR`.
+- Collects: parameters, geometry, graph stats, MST, shortest path, centralities + top-5 hubs, communities, VGA.
+- Uses `globals()` guards — safe to run after partial execution.
 
-**Section 22 — analysis summary export:**
-- Writes `analysis_summary.md` (human-readable tables) and `analysis_metadata.json` (machine-readable) to `ASSETS_DIR`.
-- Collects: parameters, geometry (bbox, face counts, navigable nodes), graph stats, MST, shortest path, centrality stats + top-5 hubs, community sizes + areas, VGA per-floor stats.
-- Uses `globals()` guards so it only includes metrics that have been computed — safe to run after partial execution.
+**Section 23 — git commit & push (all notebooks):**
+- Stages the notebook + `ASSETS_DIR`, commits with timestamp message, pushes `origin main`.
 
 ### Stair connectivity format
 
@@ -173,17 +211,21 @@ The project uses the venv at `../.env/` (one level up from `Final_Project/`). Ac
 
 - Always **wait for the notebook kernel to finish** (status bar shows idle) before running `git commit` on assets.
 - `*.3dmbak` and `*.rhl` files should not be staged — they are Rhino auto-backups.
-- `OLD_NB_*` notebooks are git-ignored; only `Updated_NB_*` and `NB_Marsella_Apartments_Section` are tracked.
+- `OLD_NB_*` notebooks are git-ignored; `Simplified_NB_*`, `Updated_NB_*` and `NB_Marsella_Apartments_Section` are tracked.
 - Community detection (`Graph.CommunityPartition`) is stochastic — community colours will vary between runs.
 
 ## Typical run time
 
 | Notebook | `GRID_SIZE` | Approx. nodes | Estimated time |
 |---|---|---|---|
-| Apartment section | `0.2` | ~few thousand | minutes–1 h |
-| Full building | `0.5` | ~40 000 | days (use Team_Notebooks) |
-| Full building | `1.0` | ~8 800 | 1.5–3 h |
-| Full building | `3.0` | ~1 012 | ~2.5 min |
+| Apartment section | `0.12` | ~15 000 | 8–18 h (betweenness dominates) |
+| Apartment section | `0.2` | ~4 000 | 1–1.5 h |
+| Apartment section | `0.3` | ~1 800 | 10–25 min |
+| Simplified building | `0.7` | ~few thousand | 30–90 min |
+| Simplified building | `8.0` | ~100–150 | < 1 min (smoke test) |
+| Full building (original) | `0.5` | ~40 000 | days (use Team_Notebooks) |
+| Full building (original) | `1.0` | ~8 800 | 1.5–3 h |
+| Full building (original) | `3.0` | ~1 012 | ~2.5 min |
 
 ### Team_Notebooks split (for full building at GRID_SIZE = 0.5)
 
