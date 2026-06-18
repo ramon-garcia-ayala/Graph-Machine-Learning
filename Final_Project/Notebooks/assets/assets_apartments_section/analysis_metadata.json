@@ -1,19 +1,19 @@
 {
-  "generated": "2026-06-17 23:22:31",
+  "generated": "2026-06-18 10:39:13",
   "notebook": "NB_Marsella_Apartments_Section.ipynb",
   "description": "Spatial Intelligence analysis of a 3-apartment section of the Unite d'Habitation (Marseille).",
   "parameters": {
     "OBJ_PATH": "E:/IAAC Local GIT Repositories/Graph ML - Environment/Final_Project\\3D-Models\\Marsella_3-Apartments.obj",
-    "GRID_SIZE": 2,
+    "GRID_SIZE": 0.12,
     "FLOOR_HEIGHT": 10.0,
     "FLOOR_LEVELS": [
       0,
       4,
       8
     ],
-    "VGA_GRID_SIZE": 1.0,
+    "VGA_GRID_SIZE": 0.3,
     "VIS_SAMPLES": 12,
-    "ISO_STEP": 3.0,
+    "ISO_STEP": 0.12,
     "n_stair_locations": 4
   },
   "geometry": {
@@ -26,161 +26,373 @@
       "height": 24.09979199999998
     },
     "faces_per_floor": {
-      "Floor 1": 189,
+      "Floor 1": 187,
       "Floor 2": 88,
       "Floor 3": 191
     },
     "navigable_nodes_per_floor": {
-      "Floor 1": 50,
-      "Floor 2": 38,
-      "Floor 3": 36
+      "Floor 1": 13101,
+      "Floor 2": 10185,
+      "Floor 3": 10025
     }
   },
   "graph": {
-    "nodes": 124,
-    "edges": 197,
-    "density": 0.025832677681615526,
+    "nodes": 33311,
+    "edges": 64135,
+    "density": 0.00011560131959082053,
     "stair_edges": 4
   },
   "mst": {
-    "vertices": 124,
-    "edges": 123,
-    "density": 0.016129032258064516
+    "vertices": 33311,
+    "edges": 33310,
+    "density": 6.0040226952057876e-05
   },
   "shortest_path": {
-    "length": 40.396078,
-    "n_nodes": 13,
-    "simplified_length": 37.11442526060604,
+    "length": 50.263026,
+    "n_nodes": 255,
+    "simplified_length": 41.09108999467071,
     "simplified_waypoints": 6
   },
   "centrality": {
     "degree": {
-      "n": 124,
-      "min": 0.00813,
-      "max": 0.04878,
-      "mean": 0.02583241935483871,
-      "std": 0.006615196504404344,
+      "n": 33311,
+      "min": 6e-05,
+      "max": 0.00015,
+      "mean": 0.000115520398667107,
+      "std": 1.1493438262140637e-05,
       "per_floor_mean": [
-        0.026341,
-        0.026529,
-        0.02439
+        0.000116,
+        0.000116,
+        0.000115
       ]
     },
     "closeness": {
-      "n": 124,
-      "min": 0.069728,
-      "max": 0.148193,
-      "mean": 0.10800457258064518,
-      "std": 0.021950841496168053,
+      "n": 33311,
+      "min": 0.003526,
+      "max": 0.008709,
+      "mean": 0.00566958554231335,
+      "std": 0.0012295483718679338,
       "per_floor_mean": [
-        0.101677,
-        0.126588,
-        0.097177
+        0.005219,
+        0.006901,
+        0.005008
       ]
     },
     "betweenness": {
-      "n": 124,
+      "n": 33311,
       "min": 0.0,
-      "max": 0.507791,
-      "mean": 0.07102106451612902,
-      "std": 0.08811665106136314,
+      "max": 0.320751,
+      "mean": 0.005518870883491939,
+      "std": 0.021574253123860656,
       "per_floor_mean": [
-        0.062879,
-        0.09225,
-        0.059921
+        0.003986,
+        0.008299,
+        0.004697
       ]
     },
     "top5_degree_hubs": [
       {
         "floor": 1,
-        "x": 110.51,
-        "y": 341.38,
-        "score": 0.04878,
-        "connections": 6
+        "x": 110.11,
+        "y": 340.82,
+        "score": 0.00015,
+        "connections": 5
+      },
+      {
+        "floor": 1,
+        "x": 111.31,
+        "y": 340.82,
+        "score": 0.00015,
+        "connections": 5
       },
       {
         "floor": 2,
-        "x": 110.51,
-        "y": 349.38,
-        "score": 0.04878,
-        "connections": 6
+        "x": 110.23,
+        "y": 350.06,
+        "score": 0.00015,
+        "connections": 5
+      },
+      {
+        "floor": 2,
+        "x": 111.43,
+        "y": 350.06,
+        "score": 0.00015,
+        "connections": 5
       },
       {
         "floor": 1,
-        "x": 110.51,
-        "y": 335.38,
-        "score": 0.03252,
-        "connections": 4
-      },
-      {
-        "floor": 1,
-        "x": 112.51,
-        "y": 335.38,
-        "score": 0.03252,
-        "connections": 4
-      },
-      {
-        "floor": 1,
-        "x": 110.51,
-        "y": 337.38,
-        "score": 0.03252,
+        "x": 106.75,
+        "y": 333.5,
+        "score": 0.00012,
         "connections": 4
       }
     ]
   },
   "communities": {
-    "count": 7,
-    "total_cells": 124,
-    "total_area_m2": 496,
+    "count": 60,
+    "total_cells": 33311,
+    "total_area_m2": 479.678,
     "sizes": {
       "0": {
-        "cells": 12,
-        "area_m2": 48
+        "cells": 993,
+        "area_m2": 14.299
       },
       "1": {
-        "cells": 19,
-        "area_m2": 76
+        "cells": 1015,
+        "area_m2": 14.616
       },
       "2": {
-        "cells": 21,
-        "area_m2": 84
+        "cells": 431,
+        "area_m2": 6.206
       },
       "3": {
-        "cells": 16,
-        "area_m2": 64
+        "cells": 1189,
+        "area_m2": 17.122
       },
       "4": {
-        "cells": 20,
-        "area_m2": 80
+        "cells": 718,
+        "area_m2": 10.339
       },
       "5": {
-        "cells": 22,
-        "area_m2": 88
+        "cells": 636,
+        "area_m2": 9.158
       },
       "6": {
-        "cells": 14,
-        "area_m2": 56
+        "cells": 537,
+        "area_m2": 7.733
+      },
+      "7": {
+        "cells": 433,
+        "area_m2": 6.235
+      },
+      "8": {
+        "cells": 320,
+        "area_m2": 4.608
+      },
+      "9": {
+        "cells": 609,
+        "area_m2": 8.77
+      },
+      "10": {
+        "cells": 581,
+        "area_m2": 8.366
+      },
+      "11": {
+        "cells": 321,
+        "area_m2": 4.622
+      },
+      "12": {
+        "cells": 106,
+        "area_m2": 1.526
+      },
+      "13": {
+        "cells": 501,
+        "area_m2": 7.214
+      },
+      "14": {
+        "cells": 635,
+        "area_m2": 9.144
+      },
+      "15": {
+        "cells": 515,
+        "area_m2": 7.416
+      },
+      "16": {
+        "cells": 801,
+        "area_m2": 11.534
+      },
+      "17": {
+        "cells": 631,
+        "area_m2": 9.086
+      },
+      "18": {
+        "cells": 487,
+        "area_m2": 7.013
+      },
+      "19": {
+        "cells": 376,
+        "area_m2": 5.414
+      },
+      "20": {
+        "cells": 718,
+        "area_m2": 10.339
+      },
+      "21": {
+        "cells": 571,
+        "area_m2": 8.222
+      },
+      "22": {
+        "cells": 636,
+        "area_m2": 9.158
+      },
+      "23": {
+        "cells": 640,
+        "area_m2": 9.216
+      },
+      "24": {
+        "cells": 566,
+        "area_m2": 8.15
+      },
+      "25": {
+        "cells": 510,
+        "area_m2": 7.344
+      },
+      "26": {
+        "cells": 877,
+        "area_m2": 12.629
+      },
+      "27": {
+        "cells": 180,
+        "area_m2": 2.592
+      },
+      "28": {
+        "cells": 424,
+        "area_m2": 6.106
+      },
+      "29": {
+        "cells": 424,
+        "area_m2": 6.106
+      },
+      "30": {
+        "cells": 259,
+        "area_m2": 3.73
+      },
+      "31": {
+        "cells": 268,
+        "area_m2": 3.859
+      },
+      "32": {
+        "cells": 707,
+        "area_m2": 10.181
+      },
+      "33": {
+        "cells": 558,
+        "area_m2": 8.035
+      },
+      "34": {
+        "cells": 449,
+        "area_m2": 6.466
+      },
+      "35": {
+        "cells": 294,
+        "area_m2": 4.234
+      },
+      "36": {
+        "cells": 714,
+        "area_m2": 10.282
+      },
+      "37": {
+        "cells": 700,
+        "area_m2": 10.08
+      },
+      "38": {
+        "cells": 1009,
+        "area_m2": 14.53
+      },
+      "39": {
+        "cells": 971,
+        "area_m2": 13.982
+      },
+      "40": {
+        "cells": 620,
+        "area_m2": 8.928
+      },
+      "41": {
+        "cells": 616,
+        "area_m2": 8.87
+      },
+      "42": {
+        "cells": 629,
+        "area_m2": 9.058
+      },
+      "43": {
+        "cells": 522,
+        "area_m2": 7.517
+      },
+      "44": {
+        "cells": 642,
+        "area_m2": 9.245
+      },
+      "45": {
+        "cells": 574,
+        "area_m2": 8.266
+      },
+      "46": {
+        "cells": 549,
+        "area_m2": 7.906
+      },
+      "47": {
+        "cells": 492,
+        "area_m2": 7.085
+      },
+      "48": {
+        "cells": 228,
+        "area_m2": 3.283
+      },
+      "49": {
+        "cells": 225,
+        "area_m2": 3.24
+      },
+      "50": {
+        "cells": 208,
+        "area_m2": 2.995
+      },
+      "51": {
+        "cells": 225,
+        "area_m2": 3.24
+      },
+      "52": {
+        "cells": 650,
+        "area_m2": 9.36
+      },
+      "53": {
+        "cells": 582,
+        "area_m2": 8.381
+      },
+      "54": {
+        "cells": 484,
+        "area_m2": 6.97
+      },
+      "55": {
+        "cells": 292,
+        "area_m2": 4.205
+      },
+      "56": {
+        "cells": 470,
+        "area_m2": 6.768
+      },
+      "57": {
+        "cells": 277,
+        "area_m2": 3.989
+      },
+      "58": {
+        "cells": 870,
+        "area_m2": 12.528
+      },
+      "59": {
+        "cells": 846,
+        "area_m2": 12.182
       }
     }
   },
   "visibility_vga": {
     "Floor 1": {
-      "viewpoints": 190,
-      "min": 38,
-      "max": 144,
-      "mean": 94.905
+      "viewpoints": 1993,
+      "min": 477,
+      "max": 1307,
+      "mean": 840.628
     },
     "Floor 2": {
-      "viewpoints": 151,
-      "min": 16,
-      "max": 128,
-      "mean": 82.503
+      "viewpoints": 1581,
+      "min": 88,
+      "max": 1363,
+      "mean": 894.645
     },
     "Floor 3": {
-      "viewpoints": 147,
-      "min": 17,
-      "max": 98,
-      "mean": 57.973
+      "viewpoints": 1660,
+      "min": 54,
+      "max": 1042,
+      "mean": 596.08
     }
   }
 }

@@ -1,6 +1,6 @@
 # Analysis Summary — Marsella 3-Apartment Section
 
-_Generated: 2026-06-17 23:22:31_
+_Generated: 2026-06-18 10:39:13_
 
 Spatial Intelligence analysis of a 3-apartment section of the Unite d'Habitation (Marseille).
 
@@ -9,12 +9,12 @@ Spatial Intelligence analysis of a 3-apartment section of the Unite d'Habitation
 | Parameter | Value |
 |---|---|
 | `OBJ_PATH` | E:/IAAC Local GIT Repositories/Graph ML - Environment/Final_Project\3D-Models\Marsella_3-Apartments.obj |
-| `GRID_SIZE` | 2 |
+| `GRID_SIZE` | 0.12 |
 | `FLOOR_HEIGHT` | 10.0 |
 | `FLOOR_LEVELS` | [0, 4, 8] |
-| `VGA_GRID_SIZE` | 1.0 |
+| `VGA_GRID_SIZE` | 0.3 |
 | `VIS_SAMPLES` | 12 |
-| `ISO_STEP` | 3.0 |
+| `ISO_STEP` | 0.12 |
 | `n_stair_locations` | 4 |
 
 ## Geometry
@@ -23,60 +23,113 @@ Spatial Intelligence analysis of a 3-apartment section of the Unite d'Habitation
 
 | Floor | Faces | Navigable nodes |
 |---|---|---|
-| Floor 1 (Z=0) | 189 | 50 |
-| Floor 2 (Z=4) | 88 | 38 |
-| Floor 3 (Z=8) | 191 | 36 |
+| Floor 1 (Z=0) | 187 | 13101 |
+| Floor 2 (Z=4) | 88 | 10185 |
+| Floor 3 (Z=8) | 191 | 10025 |
 
 ## Building graph
 
-- Nodes: **124**  |  Edges: **197**  |  Density: **0.02583**  |  Stair edges: **4**
+- Nodes: **33311**  |  Edges: **64135**  |  Density: **0.00012**  |  Stair edges: **4**
 
 ## Minimum Spanning Tree
 
-- Vertices: 124  |  Edges: 123  |  Density: 0.01613
+- Vertices: 33311  |  Edges: 33310  |  Density: 0.00006
 
 ## Cross-floor shortest path
 
-- Length: **40.4**  |  Nodes: 13
-  |  Simplified: 37.1 (6 waypoints)
+- Length: **50.3**  |  Nodes: 255
+  |  Simplified: 41.1 (6 waypoints)
 
 ## Centrality metrics
 
 | Metric | min | max | mean | std | per-floor mean |
 |---|---|---|---|---|---|
-| Degree | 0.0081 | 0.0488 | 0.0258 | 0.0066 | [0.026341, 0.026529, 0.02439] |
-| Closeness | 0.0697 | 0.1482 | 0.1080 | 0.0220 | [0.101677, 0.126588, 0.097177] |
-| Betweenness | 0.0000 | 0.5078 | 0.0710 | 0.0881 | [0.062879, 0.09225, 0.059921] |
+| Degree | 0.0001 | 0.0001 | 0.0001 | 0.0000 | [0.000116, 0.000116, 0.000115] |
+| Closeness | 0.0035 | 0.0087 | 0.0057 | 0.0012 | [0.005219, 0.006901, 0.005008] |
+| Betweenness | 0.0000 | 0.3208 | 0.0055 | 0.0216 | [0.003986, 0.008299, 0.004697] |
 
 **Top 5 degree hubs:**
 
-- Floor 1 (110.51, 341.38) → 0.0488 (6 connections)
-- Floor 2 (110.51, 349.38) → 0.0488 (6 connections)
-- Floor 1 (110.51, 335.38) → 0.0325 (4 connections)
-- Floor 1 (112.51, 335.38) → 0.0325 (4 connections)
-- Floor 1 (110.51, 337.38) → 0.0325 (4 connections)
+- Floor 1 (110.11, 340.82) → 0.0001 (5 connections)
+- Floor 1 (111.31, 340.82) → 0.0001 (5 connections)
+- Floor 2 (110.23, 350.06) → 0.0001 (5 connections)
+- Floor 2 (111.43, 350.06) → 0.0001 (5 connections)
+- Floor 1 (106.75, 333.5) → 0.0001 (4 connections)
 
 ## Community detection
 
-- Communities: **7**  |  Total cells: 124  |  Total area: ~496 m²
+- Communities: **60**  |  Total cells: 33311  |  Total area: ~479.678 m²
 
 | Community | Cells | Area m² |
 |---|---|---|
-| 0 | 12 | 48 |
-| 1 | 19 | 76 |
-| 2 | 21 | 84 |
-| 3 | 16 | 64 |
-| 4 | 20 | 80 |
-| 5 | 22 | 88 |
-| 6 | 14 | 56 |
+| 0 | 993 | 14.299 |
+| 1 | 1015 | 14.616 |
+| 2 | 431 | 6.206 |
+| 3 | 1189 | 17.122 |
+| 4 | 718 | 10.339 |
+| 5 | 636 | 9.158 |
+| 6 | 537 | 7.733 |
+| 7 | 433 | 6.235 |
+| 8 | 320 | 4.608 |
+| 9 | 609 | 8.77 |
+| 10 | 581 | 8.366 |
+| 11 | 321 | 4.622 |
+| 12 | 106 | 1.526 |
+| 13 | 501 | 7.214 |
+| 14 | 635 | 9.144 |
+| 15 | 515 | 7.416 |
+| 16 | 801 | 11.534 |
+| 17 | 631 | 9.086 |
+| 18 | 487 | 7.013 |
+| 19 | 376 | 5.414 |
+| 20 | 718 | 10.339 |
+| 21 | 571 | 8.222 |
+| 22 | 636 | 9.158 |
+| 23 | 640 | 9.216 |
+| 24 | 566 | 8.15 |
+| 25 | 510 | 7.344 |
+| 26 | 877 | 12.629 |
+| 27 | 180 | 2.592 |
+| 28 | 424 | 6.106 |
+| 29 | 424 | 6.106 |
+| 30 | 259 | 3.73 |
+| 31 | 268 | 3.859 |
+| 32 | 707 | 10.181 |
+| 33 | 558 | 8.035 |
+| 34 | 449 | 6.466 |
+| 35 | 294 | 4.234 |
+| 36 | 714 | 10.282 |
+| 37 | 700 | 10.08 |
+| 38 | 1009 | 14.53 |
+| 39 | 971 | 13.982 |
+| 40 | 620 | 8.928 |
+| 41 | 616 | 8.87 |
+| 42 | 629 | 9.058 |
+| 43 | 522 | 7.517 |
+| 44 | 642 | 9.245 |
+| 45 | 574 | 8.266 |
+| 46 | 549 | 7.906 |
+| 47 | 492 | 7.085 |
+| 48 | 228 | 3.283 |
+| 49 | 225 | 3.24 |
+| 50 | 208 | 2.995 |
+| 51 | 225 | 3.24 |
+| 52 | 650 | 9.36 |
+| 53 | 582 | 8.381 |
+| 54 | 484 | 6.97 |
+| 55 | 292 | 4.205 |
+| 56 | 470 | 6.768 |
+| 57 | 277 | 3.989 |
+| 58 | 870 | 12.528 |
+| 59 | 846 | 12.182 |
 
 ## Visibility Graph Analysis (per floor)
 
 | Floor | Viewpoints | min | max | mean |
 |---|---|---|---|---|
-| Floor 1 | 190 | 38 | 144 | 94.905 |
-| Floor 2 | 151 | 16 | 128 | 82.503 |
-| Floor 3 | 147 | 17 | 98 | 57.973 |
+| Floor 1 | 1993 | 477 | 1307 | 840.628 |
+| Floor 2 | 1581 | 88 | 1363 | 894.645 |
+| Floor 3 | 1660 | 54 | 1042 | 596.08 |
 
 ---
 _Generated automatically by section 22 of the notebook. Community colours/partition are stochastic and may differ between runs._
