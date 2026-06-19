@@ -55,7 +55,8 @@ Final_Project/
 │   ├── example_outputs/                    ← reference PNGs from a verified run
 │   ├── outputs/                            ← where fresh runs save their PNGs
 │   └── README.md
-└── assets_new_notebooks/                   ← outputs from Updated_NB (original full building)
+├── assets_building_floorplans_v1.0/        ← outputs from original NB (first run)
+└── assets_building_floorplans_v2.0/        ← outputs from Updated_NB (improved run)
 ```
 
 Assets folders are named with the grid size used in that run (e.g. `_0.12m-grid`, `_8.0m-grid`). When re-running at a new `GRID_SIZE`, update `ASSETS_DIR` in the config cell to match.
@@ -138,7 +139,7 @@ Assets folders are named with the grid size used in that run (e.g. `_0.12m-grid`
 | `STAIR_LOCATIONS` | 57 entries | Original XY coordinates (Y≈333-357 coordinate system) |
 | `VGA_GRID_SIZE` | `5.0` | Visibility viewpoint spacing |
 | `ISO_STEP` | `5.0` | Isovist viewpoint spacing |
-| `ASSETS_DIR` | `assets_new_notebooks/` | Output PNGs |
+| `ASSETS_DIR` | `Notebooks/assets/assets_building_floorplans_v2.0/` | Output PNGs |
 
 ### Apartment-section notebook (`NB_Marsella_Apartments_Section`)
 
