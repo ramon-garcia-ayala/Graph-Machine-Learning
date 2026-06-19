@@ -4,7 +4,7 @@
 
 Spatial Intelligence analysis of three stacked floor plans from Le Corbusier's *Unité d'Habitation* (Marseille) using **topologicpy** and the Session-03 / Assignment-02 workflows. The key distinction from Assignment-02 is that all metrics are computed on a **single connected building graph** (all three floors joined through stair nodes), not per floor in isolation.
 
-Three active notebooks exist: the **full-building simplified** analysis (`Simplified_NB_…`), the **full-building original** analysis (`Updated_NB_…`), and a **focused apartment-section** analysis (`NB_Marsella_Apartments_Section`).
+Three active notebooks exist: the **full-building simplified** analysis (`Simplified_NB_…`), the **full-building normal** analysis (`Normal_NB_…`), and a **focused apartment-section** analysis (`NB_Marsella_Apartments_Section`).
 
 ## Folder structure
 
@@ -20,10 +20,11 @@ Final_Project/
 ├── Notebooks/
 │   ├── Spatial Intelligence/
 │   │   ├── Simplified_NB_Marsella_MultiFloor_Spatial_Intelligence.ipynb  ← simplified building
-│   │   ├── Updated_NB_Marsella_MultiFloor_Spatial_Intelligence.ipynb     ← original full building
+│   │   ├── Normal_NB_Marsella_MultiFloor_Spatial_Intelligence.ipynb      ← normal full building
 │   │   └── NB_Marsella_Apartments_Section.ipynb                          ← apartment section
 │   └── assets/
-│       ├── assets_simplified_building_floorplans_8.0m-grid/  ← Simplified outputs (GRID_SIZE=8.0)
+│       ├── assets_simplified_building_floorplans_1.0m-grid/  ← Simplified outputs (GRID_SIZE=1.0)
+│       ├── assets_simplified_building_floorplans_8.0m-grid/  ← Simplified outputs (GRID_SIZE=8.0, smoke test)
 │       │   ├── 01_floor_plans.png          (vertical, black bg)
 │       │   ├── 02_navigable_grids.png      (vertical, black bg)
 │       │   ├── 03_building_graph_3d.png    (orthographic isometric, axes visible)
@@ -130,7 +131,7 @@ Assets folders are named with the grid size used in that run (e.g. `_0.12m-grid`
 | `ASSETS_DIR` | `Notebooks/assets/assets_simplified_building_floorplans_{grid}/` | Output PNGs |
 | `INTERACTIVE_RENDERER` | `"png"` | Static PNG only (no browser popup) |
 
-### Original full-building notebook (`Updated_NB_Marsella_MultiFloor_Spatial_Intelligence`)
+### Normal full-building notebook (`Normal_NB_Marsella_MultiFloor_Spatial_Intelligence`)
 
 | Parameter | Value | Effect |
 |---|---|---|
@@ -212,7 +213,7 @@ The project uses the venv at `../.env/` (one level up from `Final_Project/`). Ac
 
 - Always **wait for the notebook kernel to finish** (status bar shows idle) before running `git commit` on assets.
 - `*.3dmbak` and `*.rhl` files should not be staged — they are Rhino auto-backups.
-- `OLD_NB_*` notebooks are git-ignored; `Simplified_NB_*`, `Updated_NB_*` and `NB_Marsella_Apartments_Section` are tracked.
+- `OLD_NB_*` notebooks are git-ignored; `Simplified_NB_*`, `Normal_NB_*` and `NB_Marsella_Apartments_Section` are tracked.
 - Community detection (`Graph.CommunityPartition`) is stochastic — community colours will vary between runs.
 
 ## Typical run time
