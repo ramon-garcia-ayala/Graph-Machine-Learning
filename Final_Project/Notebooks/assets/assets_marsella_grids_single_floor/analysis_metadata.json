@@ -1,0 +1,132 @@
+{
+  "generated": "2026-06-20 21:37:41",
+  "notebook": "Marsella_Grids_SingleFloor_Spatial_Intelligence.ipynb",
+  "description": "Single-floor Spatial Intelligence analysis of the Marsella building using pre-defined grid cells from Marsella_grids.obj.",
+  "parameters": {
+    "BUILDING_OBJ_PATH": "E:/IAAC Local GIT Repositories/Graph ML - Environment/Final_Project\\3D-Models\\Marsella_3-Floor-Plans_SIMPLIFIED.obj",
+    "GRID_OBJ_PATH": "E:/IAAC Local GIT Repositories/Graph ML - Environment/Final_Project\\3D-Models\\Marsella_grids.obj",
+    "FLOOR_Z": 1,
+    "building_faces": 804,
+    "sliced_faces": 804,
+    "total_nodes": 804,
+    "VGA_SUBSAMPLE": 5,
+    "VIS_SAMPLES": 12
+  },
+  "geometry": {
+    "plan_bbox": {
+      "x_min": 228.75,
+      "x_max": 361.25,
+      "y_min": 5.25,
+      "y_max": 28.75,
+      "width": 132.5,
+      "height": 23.5
+    },
+    "building_faces": 804,
+    "sliced_faces": 804,
+    "total_nodes": 804
+  },
+  "graph": {
+    "nodes": 804,
+    "edges": 841,
+    "density": 0.002605279951425934
+  },
+  "mst": {
+    "vertices": 804,
+    "edges": 766,
+    "density": 0.0023729422625353926
+  },
+  "centrality": {
+    "degree": {
+      "n": 804,
+      "min": 0.0,
+      "max": 0.003736,
+      "mean": 0.0026054863184079603,
+      "std": 0.0007312355121237777
+    },
+    "closeness": {
+      "n": 804,
+      "min": 0.0,
+      "max": 0.009163,
+      "mean": 0.006446145522388059,
+      "std": 0.001492182926299471
+    },
+    "betweenness": {
+      "n": 804,
+      "min": 0.0,
+      "max": 0.000918,
+      "mean": 0.00024287810945273632,
+      "std": 0.00021342235604106092
+    },
+    "top5_degree_hubs": [
+      {
+        "x_plan": 333.5,
+        "y_plan": 24.0,
+        "score": 0.003736
+      },
+      {
+        "x_plan": 334.0,
+        "y_plan": 22.0,
+        "score": 0.003736
+      },
+      {
+        "x_plan": 334.167,
+        "y_plan": 17.333,
+        "score": 0.003736
+      },
+      {
+        "x_plan": 335.0,
+        "y_plan": 22.0,
+        "score": 0.003736
+      },
+      {
+        "x_plan": 335.5,
+        "y_plan": 24.0,
+        "score": 0.003736
+      }
+    ]
+  },
+  "communities": {
+    "count": 38,
+    "total_cells": 804,
+    "sizes": {
+      "0": 1,
+      "1": 1,
+      "2": 1,
+      "3": 8,
+      "4": 1,
+      "5": 1,
+      "6": 1,
+      "7": 1,
+      "8": 6,
+      "9": 7,
+      "10": 32,
+      "11": 32,
+      "12": 34,
+      "13": 32,
+      "14": 32,
+      "15": 32,
+      "16": 33,
+      "17": 32,
+      "18": 32,
+      "19": 32,
+      "20": 32,
+      "21": 32,
+      "22": 1,
+      "23": 1,
+      "24": 1,
+      "25": 1,
+      "26": 32,
+      "27": 32,
+      "28": 32,
+      "29": 32,
+      "30": 31,
+      "31": 32,
+      "32": 32,
+      "33": 32,
+      "34": 32,
+      "35": 33,
+      "36": 32,
+      "37": 33
+    }
+  }
+}
